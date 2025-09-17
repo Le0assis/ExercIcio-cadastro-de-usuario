@@ -37,25 +37,50 @@ class UserManager{
 
         $this->users[] = $newUser;
 
-        return '<p> Usuario cadastrado </p>';
+        return '<p> usuário cadastrado com sucesso. </p>';
 
 
 
 
     }
 
-    public function getpassword (int $id){
-        return $this->users[$id]->password;
-    }
     # Login
+    public function login(string $email, string $password){
+
+        foreach ($this->users as $user){
+            if ($user->email == $email){
+
+                if(Password_verify($password, $user->password)){
+                    echo "<p> Login Bem sucedido </p>";
+                    return true;
+                    
+                } else {
+                    echo "<p> Senha errada </p>";
+                    return false;
+                }
+            } 
+        } 
+        echo "<p> Login errado </p>";
+        return false;
+    }
+
     # Reset
+    public function resetPassword (string $email, string $newPassword){
+        foreach ($this->users as $user){
+            if ($user->email == $email){
+                if ($this->validator->validateStrongPassword($newPassword)){
+                    $user->password = password_hash($newPassword, PASSWORD_DEFAULT);
+                    echo "<p> senha alterada com sucesso </p>";
+                    return true;
+                } else {
+                    echo "<p> Senha invalida </p>";
+                    return false;
+                }
+            } 
+        }
+        echo "<p> Credenciais erradas </p>";
+        return false;
+
+    }
+     
 }
-
-$userManager = new UserManager();
-$userManager->registerUser('Eustaquio','eustaquio@gmail.com','Senhaforte1') ;
-$userManager->registerUser('Mario Candido','mario@gmail.com','Senhaforte2') ;
-$userManager->registerUser('Gabriel','gabriel@gmail.com','Senhaforte4') ;
-$result = $userManager->registerUser('Maria Alice','Maria@gmail.com','Senhaforte4') ;
-
-echo $result ;
-echo $userManager->getpassword(2) ;
