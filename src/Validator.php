@@ -21,10 +21,11 @@ class Validator{
         return true; 
     }
 
-    public function validateStrongPassword(string $password): bool | string{
+    public function validateStrongPassword(string $password): bool | string 
+    {
 
-        $hashUppercase =false;
-        $hashNumeric = false;
+        $hasUppercase =false;
+        $hasNumeric = false;
 
 
         if (strlen($password) < 8){
@@ -33,17 +34,14 @@ class Validator{
 
         for ($i = 0;  $i < strlen($password) ; $i++){
             if ($password[$i] == strtoupper($password[$i])){
-                $hashUppercase = true;
+                $hasUppercase = true;
             }
             if (is_numeric($password[$i])){
-                $hashNumeric = true;
+                $hasNumeric = true;
             }
         }
 
-        if (
-            $hashNumeric == true && 
-            $hashUppercase == true
-            ){
+        if ($hasNumeric && $hasUppercase ){
             return true;
         } else{
             return false;
