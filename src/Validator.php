@@ -43,7 +43,7 @@ class Validator{
 
         if ($hasNumeric && $hasUppercase ){
             return true;
-        } else{
+        } else {
             return false;
         }
         
